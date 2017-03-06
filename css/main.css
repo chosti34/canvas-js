@@ -1,0 +1,92 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
+.clearfix
+{
+    clear: both;
+}
+
+/* Вдобавок к bootstrap-свойствам */
+.container
+{
+    margin-top: 25px;
+}
+
+.main-form-block
+{
+    margin-bottom: 15px;
+}
+
+.shape-selector
+{
+    display: block;
+    height: 34px;
+    cursor: pointer;
+}
+
+.main-form-block input, select
+{
+    margin: 5px 0;
+    padding: 5px 5px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    color: #777;
+    letter-spacing: 0.04em;
+    background: transparent;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+
+.main-form-block input[type="text"]:focus
+{
+    color: #000;
+    border: 1px solid #000;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.main-form-block input[type="number"]:focus
+{
+    color: #000;
+    border: 1px solid #000;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.main-form-block input[type="button"]:hover
+{
+    color: #000;
+    border: 1px solid #000;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.main-form-input-label
+{
+    display: block;
+    margin-top: 5px;
+}
+
+.main-menu-buttons-block
+{
+    margin: 10px 0 10px;
+    width: 100%;
+}
+
+.canvas
+{
+    display: block;
+    border: 2px solid #000;
+    margin-bottom: 15px;
+}
