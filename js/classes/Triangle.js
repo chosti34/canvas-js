@@ -2,14 +2,15 @@ function Triangle(fillColor, borderColor)
 {
     Shape.apply(this, arguments); // вызываем конструктор базового класса
 
-    this.x1 = 300;
-    this.y1 = 160;
+    // инициализируем координаты "по умолчанию"
+    this.x1 = 340;
+    this.y1 = 151;
 
     this.x2 = 280;
-    this.y2 = 270;
+    this.y2 = 320;
 
-    this.x3 = 180;
-    this.y3 = 150;
+    this.x3 = 165;
+    this.y3 = 125;
 }
 
 Triangle.prototype = Object.create(Shape.prototype);

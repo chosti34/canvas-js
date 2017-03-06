@@ -13,7 +13,7 @@ Canvas.prototype.initialize = function()
     this.context.lineWidth = 5;
 };
 
-Canvas.prototype.clear = function(color = "#000")
+Canvas.prototype.clear = function(color)
 {
     var prevFillStyle = this.context.fillStyle;
     this.context.fillStyle = color;
@@ -48,7 +48,7 @@ Canvas.prototype.drawCircle = function(x, y, radius)
     this.context.fill();
 };
 
-Canvas.prototype.print = function(data, x, y, color = "#000")
+Canvas.prototype.print = function(data, x, y, color)
 {
     var textWidth = this.context.measureText(data).width;
     var offsetX = 20;
