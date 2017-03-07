@@ -2,6 +2,22 @@ module.exports = function(grunt)
 {
     grunt.initConfig(
     {
+        connect:
+        {
+            server:
+            {
+                options:
+                {
+                    port: 8080,
+                    base: '',
+                    open:
+                    {
+                        appName: 'Chrome'
+                    }
+                }
+            }
+        },
+
         concat:
         {
             dist:
@@ -17,6 +33,26 @@ module.exports = function(grunt)
             {
                 src: 'dist/canvas.js',
                 dest: 'dist/canvas.min.js'
+            }
+        },
+
+        cachebust: {
+            task: {
+                options: {
+                    assets: ['dist/**']
+                },
+                src: ['index.html']
+            }
+        },
+
+        bustCache: {
+            dev: {
+                options: {
+                    hashType: "timestamp",
+                    css: true,
+                    javascript: true
+                },
+                src: "index.html"
             }
         },
 
@@ -56,18 +92,18 @@ module.exports = function(grunt)
             css:
             {
                 files: ['css/**/*.*'],
-                tasks: ['cssmin']
+                tasks: ['cssmin', 'bustCache']
             },
 
             scripts:
             {
                 files: ['js/**/*.*'],
-                tasks: ['concat', 'uglify', 'eslint'],
+                tasks: ['concat', 'uglify', 'eslint', 'bustCache'],
             },
 
             html:
             {
-                files: ['index.html']
+                files: ['index.html', 'bustCache']
             }
         },
     });
@@ -76,7 +112,13 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-bust-cache');
     grunt.loadNpmTasks('grunt-eslint');
 
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'watch']);
+    grunt.registerTask('default', [
+        'concat', 'uglify',
+        'cssmin', 'connect:server',
+        'bustCache', 'watch'
+    ]);
 };
