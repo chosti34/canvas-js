@@ -1,75 +1,45 @@
 module.exports = function(grunt)
 {
-    grunt.initConfig(
-    {
-        connect:
-        {
-            server:
-            {
-                options:
-                {
+    grunt.initConfig({
+        // connects to the (local?) server
+        connect: {
+            server: {
+                options: {
                     port: 8080,
                     base: '',
-                    open:
-                    {
+                    open: {
                         appName: 'Chrome'
                     }
                 }
             }
         },
 
-        concat:
-        {
-            dist:
-            {
+        // merge all js files
+        concat: {
+            dist: {
                 src: ['js/**/*.js'],
-                dest: 'dist/canvas.js'
+                dest: 'build/canvas.js'
             }
         },
 
-        uglify:
-        {
-            build:
-            {
-                src: 'dist/canvas.js',
-                dest: 'dist/canvas.min.js'
+        // uglifying js files
+        uglify: {
+            build: {
+                src: 'build/canvas.js',
+                dest: 'build/canvas.min.js'
             }
         },
 
-        cachebust: {
-            task: {
-                options: {
-                    assets: ['dist/**']
-                },
-                src: ['index.html']
-            }
-        },
-
-        bustCache: {
-            dev: {
-                options: {
-                    hashType: "timestamp",
-                    css: true,
-                    javascript: true
-                },
-                src: "index.html"
-            }
-        },
-
-        cssmin:
-        {
-            options:
-            {
+        // uglifying css files
+        cssmin: {
+            options: {
                 mergeIntoShorthands: false,
                 roundingPrecision: -1
             },
 
-            target:
-            {
-                files:
-                {
-                    'dist/canvas.min.css':
-                    [
+            target: {
+                files: {
+                    'build/canvas.min.css': [
                         'node_modules/bootstrap/dist/css/bootstrap.min.css',
                         'css/main.css'
                     ]
@@ -77,33 +47,45 @@ module.exports = function(grunt)
             }
         },
 
-        eslint:
-        {
-            target: ['dist/canvas.js']
+        // code analyser
+        eslint: {
+            target: ['build/canvas.js']
         },
 
-        watch:
-        {
-            options:
-            {
+        hashres: {
+            options: {
+                fileNameFormat: '${name}.[${hash}].${ext}'
+            },
+
+            prod: {
+                src: [
+                    'build/canvas.min.js',
+                    'build/canvas.min.css'
+                ],
+
+                dest: ['index.html']
+            }
+        },
+
+        // Automatically calls procedures in tasks array
+        watch: {
+            options: {
                 livereload: true
             },
 
-            css:
-            {
+            css: {
                 files: ['css/**/*.*'],
-                tasks: ['cssmin', 'bustCache']
+                tasks: ['cssmin', 'hashres:prod']
             },
 
-            scripts:
-            {
+            scripts: {
                 files: ['js/**/*.*'],
-                tasks: ['concat', 'uglify', 'eslint', 'bustCache'],
+                tasks: ['concat', 'uglify', 'eslint', 'hashres:prod']
             },
 
-            html:
-            {
-                files: ['index.html', 'bustCache']
+            // this can be deleted?
+            html: {
+                files: ['*.html']
             }
         },
     });
@@ -113,12 +95,11 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-bust-cache');
+    grunt.loadNpmTasks('grunt-hashres');
     grunt.loadNpmTasks('grunt-eslint');
 
     grunt.registerTask('default', [
-        'concat', 'uglify',
-        'cssmin', 'connect:server',
-        'bustCache', 'watch'
+        'concat', 'uglify', 'cssmin',
+        'connect:server', 'hashres:prod', 'watch'
     ]);
 };
