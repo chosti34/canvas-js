@@ -1,20 +1,35 @@
 module.exports = function(grunt)
 {
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-
         // connects to the (local?) server
         connect: {
             server: {
                 options: {
                     port: 8080,
-                    base: '',
+                    base: 'build/',
                     open: {
                         appName: 'Chrome'
                     }
                 }
             }
         },
+
+        // copy index.html to build/ folder
+        copy: {
+            main: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['index.html'],
+                        dest: 'build/',
+                        filter: 'isFile'
+                    }
+                ]
+            }
+        },
+
+        // clean build directory
+        clean: ['build'],
 
         typescript: {
             base: {
@@ -30,15 +45,15 @@ module.exports = function(grunt)
         // merge all js files
         concat: {
             dist: {
-                src: ['js/**/*.js'],
-                dest: 'build/canvas.js'
+                src: ['src/js/**/*.js'],
+                dest: 'temp/canvas.js'
             }
         },
 
         // uglifying js files
         uglify: {
             build: {
-                src: 'build/canvas.js',
+                src: 'temp/canvas.js',
                 dest: 'build/canvas.min.js'
             }
         },
@@ -54,7 +69,7 @@ module.exports = function(grunt)
                 files: {
                     'build/canvas.min.css': [
                         'node_modules/bootstrap/dist/css/bootstrap.min.css',
-                        'css/main.css'
+                        'src/css/main.css'
                     ]
                 }
             }
@@ -62,7 +77,7 @@ module.exports = function(grunt)
 
         // code analyser
         eslint: {
-            target: ['build/canvas.js']
+            target: ['temp/canvas.js']
         },
 
         hashres: {
@@ -76,7 +91,7 @@ module.exports = function(grunt)
                     'build/canvas.min.css'
                 ],
 
-                dest: ['index.html']
+                dest: ['build/index.html']
             }
         },
 
@@ -87,12 +102,12 @@ module.exports = function(grunt)
             },
 
             css: {
-                files: ['css/**/*.*'],
+                files: ['src/css/**/*.*'],
                 tasks: ['cssmin', 'hashres:prod']
             },
 
             scripts: {
-                files: ['js/**/*.*'],
+                files: ['src/js/**/*.*'],
                 tasks: ['concat', 'uglify', 'eslint', 'hashres:prod']
             },
 
@@ -103,13 +118,8 @@ module.exports = function(grunt)
 
             // this can be deleted?
             html: {
-                files: ['*.html']
-            }
-        },
-
-        open: {
-            dev: {
-                path: 'http://localhost:8080/index.html'
+                files: ['*.html'],
+                tasks: ['copy:main']
             }
         }
     });
@@ -122,10 +132,11 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-hashres');
     grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-typescript');
-    grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('default', [
-        'concat', 'uglify', 'cssmin',
-        'connect:server', 'hashres:prod', 'watch'
+        'clean', 'concat', 'uglify', 'cssmin',
+        'connect:server', 'copy:main', 'hashres:prod', 'watch'
     ]);
 };
