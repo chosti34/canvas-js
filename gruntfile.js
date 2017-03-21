@@ -1,6 +1,8 @@
 module.exports = function(grunt)
 {
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+
         // connects to the (local?) server
         connect: {
             server: {
@@ -10,6 +12,17 @@ module.exports = function(grunt)
                     open: {
                         appName: 'Chrome'
                     }
+                }
+            }
+        },
+
+        typescript: {
+            base: {
+                src: ['ts/**/*.ts'],
+                dest: 'js/ts-compiled.js',
+                options: {
+                    module: 'amd',
+                    target: 'es5'
                 }
             }
         },
@@ -83,11 +96,22 @@ module.exports = function(grunt)
                 tasks: ['concat', 'uglify', 'eslint', 'hashres:prod']
             },
 
+            typescript: {
+                files: ['ts/**/*.ts'],
+                tasks: ['typescript']
+            },
+
             // this can be deleted?
             html: {
                 files: ['*.html']
             }
         },
+
+        open: {
+            dev: {
+                path: 'http://localhost:8080/index.html'
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -97,6 +121,8 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-hashres');
     grunt.loadNpmTasks('grunt-eslint');
+    grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-open');
 
     grunt.registerTask('default', [
         'concat', 'uglify', 'cssmin',
