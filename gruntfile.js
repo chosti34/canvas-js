@@ -28,19 +28,8 @@ module.exports = function(grunt)
             }
         },
 
-        // clean build directory
-        clean: ['build'],
-
-        typescript: {
-            base: {
-                src: ['ts/**/*.ts'],
-                dest: 'js/ts-compiled.js',
-                options: {
-                    module: 'amd',
-                    target: 'es5'
-                }
-            }
-        },
+        // clean build and temp directory
+        clean: ['build', 'temp'],
 
         // merge all js files
         concat: {
@@ -80,6 +69,15 @@ module.exports = function(grunt)
             target: ['temp/canvas.js']
         },
 
+        tslint: {
+            options:
+            {
+                configFile: '.eslintrc.json',
+                quiet: false
+            },
+            target: 'src/ts/*.ts'
+        },
+
         hashres: {
             options: {
                 fileNameFormat: '${name}.[${hash}].${ext}'
@@ -95,6 +93,20 @@ module.exports = function(grunt)
             }
         },
 
+        ts: {
+            default: {
+                src: ['src/ts/Canvas.ts', 'src/ts/IShape.ts', 'src/ts/Shape.ts', 'src/ts/Rectangle.ts', 'src/ts/Triangle.ts', 'src/ts/Circle.ts', 'src/ts/Application.ts', 'src/ts/main.ts'],
+                out: 'temp/app.js',
+                options: {
+                    module: 'system',
+                    target: 'es5',
+                    noImplicitAny: true,
+                    noEmitOnError: true,
+                    sourceMap: false
+                }
+            }
+        },
+
         // Automatically calls procedures in tasks array
         watch: {
             options: {
@@ -107,13 +119,8 @@ module.exports = function(grunt)
             },
 
             scripts: {
-                files: ['src/js/**/*.*'],
-                tasks: ['concat', 'uglify', 'eslint', 'hashres:prod']
-            },
-
-            typescript: {
-                files: ['ts/**/*.ts'],
-                tasks: ['typescript']
+                files: ['src/js/**/*.*', 'src/ts/**/*.*'],
+                tasks: ['concat', 'uglify', 'eslint', 'hashres:prod', 'tslint', 'ts'],
             },
 
             // this can be deleted?
@@ -131,12 +138,13 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-hashres');
     grunt.loadNpmTasks('grunt-eslint');
-    grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks("grunt-tslint");
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-ts');
 
     grunt.registerTask('default', [
-        'clean', 'concat', 'uglify', 'cssmin',
+        'clean', 'ts', 'tslint', 'concat', 'uglify', 'cssmin',
         'connect:server', 'copy:main', 'hashres:prod', 'watch'
     ]);
 };
