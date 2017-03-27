@@ -112,6 +112,13 @@ module.exports = function(grunt)
             }
         },
 
+        spell: {
+            files: ['src/**/*.*'],
+            options: {
+                lang: 'en'
+            }
+        },
+
         ts: {
             default: {
                 src: ['src/ts/Canvas.ts', 'src/ts/IShape.ts', 'src/ts/Shape.ts', 'src/ts/Rectangle.ts', 'src/ts/Triangle.ts', 'src/ts/Circle.ts', 'src/ts/Application.ts', 'src/ts/main.ts'],
@@ -134,12 +141,12 @@ module.exports = function(grunt)
 
             css: {
                 files: ['src/css/**/*.*'],
-                tasks: ['cssmin', 'hashres:prod']
+                tasks: ['spell', 'cssmin', 'hashres:prod']
             },
 
             scripts: {
                 files: ['src/ts/**/*.*', 'src/jsx/**/*.*'],
-                tasks: ['react', 'tslint', 'ts', 'uglify', 'hashres:prod'],
+                tasks: ['spell', 'clean', 'copy', 'cssmin', 'react', 'tslint', 'ts', 'uglify', 'hashres:prod'],
             },
 
             html: {
@@ -160,6 +167,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-react');
+    grunt.loadNpmTasks('grunt-spell');
 
     grunt.registerTask('default', [
         'clean', 'copy', 'ts', 'tslint', 'concat', 'uglify', 'react', 'cssmin',
