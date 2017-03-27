@@ -1,3 +1,9 @@
+enum ShapeType {
+    Rectangle,
+    Triangle,
+    Circle,
+}
+
 abstract class CShape implements IShape {
     constructor(protected fillColor: string, protected outlineColor: string) {
     }
@@ -18,13 +24,10 @@ abstract class CShape implements IShape {
         return this.outlineColor;
     }
 
-    // will be override
-    public getArea(): number {
-        return 0;
-    }
+    public abstract getArea(): number;
+    public abstract getPerimeter(): number;
 
-    // will be override
-    public getPerimeter(): number {
-        return 0;
-    }
+    public abstract draw(canvas: CCanvas): void;
+
+    public abstract getType(): ShapeType;
 }

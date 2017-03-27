@@ -7,4 +7,6 @@ interface IShape {
 
     getArea(): number;
     getPerimeter(): number;
+
+    draw(canvas: CCanvas): void;
 }

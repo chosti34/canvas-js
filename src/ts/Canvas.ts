@@ -1,10 +1,22 @@
 class CCanvas {
     constructor(private ctx: CanvasRenderingContext2D, private width: number, private height: number) {
+        this.initialize();
     }
 
-    private initialize(): void {
-        this.ctx.font = "20px Arial";
-        this.ctx.lineWidth = 5;
+    public setFillStyle(fillStyle: string): void {
+        this.ctx.fillStyle = fillStyle;
+    }
+
+    public setStrokeStyle(strokeStyle: string): void {
+        this.ctx.strokeStyle = strokeStyle;
+    }
+
+    public setLineWidth(lineWidth: number): void {
+        this.ctx.lineWidth = lineWidth;
+    }
+
+    public getLineWidth(): number {
+        return this.ctx.lineWidth;
     }
 
     public clear(color: string = "#fff"): void {
@@ -47,5 +59,10 @@ class CCanvas {
         this.ctx.fillStyle = color;
         this.ctx.fillText(data, this.width - textWidth - offsetX, y);
         this.ctx.fillStyle = prev;
+    }
+
+    private initialize(): void {
+        this.ctx.font = "20px Arial";
+        this.ctx.lineWidth = 5;
     }
 }

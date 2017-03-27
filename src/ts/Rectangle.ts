@@ -1,28 +1,55 @@
-function Rectangle(fillColor, borderColor)
-{
-    Shape.apply(this, arguments); // вызываем конструктор базового класса
+class CRectangle extends CShape {
+    constructor(private x: number, private y: number,
+                private width: number, private height: number,
+                fillColor: string, outlineColor: string) {
+        super(fillColor, outlineColor);
+    }
 
-    this.x = 300;
-    this.y = 200;
+    public setX(x: number): void {
+        this.x = x;
+    }
 
-    this.width = 120;
-    this.height = 110;
+    public getX(): number {
+        return this.x;
+    }
+
+    public setY(y: number): void {
+        this.y = y;
+    }
+
+    public getY(): number {
+        return this.y;
+    }
+
+    public setWidth(width: number) {
+        this.width = width;
+    }
+
+    public getWidth(): number {
+        return this.width;
+    }
+
+    public setHeight(height: number): void {
+        this.height = height;
+    }
+
+    public getHeight(): number {
+        return this.height;
+    }
+
+    public getArea(): number {
+        return this.width * this.height;
+    }
+
+    public getPerimeter(): number {
+        return 2 * (this.width + this.height);
+    }
+
+    public draw(canvas: CCanvas): void {
+        canvas.drawRectangle(this.x, this.y, this.width, this.height);
+    }
+
+    public getType(): ShapeType {
+        return ShapeType.Rectangle;
+    }
 }
-
-Rectangle.prototype = Object.create(Shape.prototype);
-Rectangle.prototype.constructor = Rectangle;
-
-Rectangle.prototype.draw = function(canvas)
-{
-    canvas.drawRect(this.x, this.y, this.width, this.height);
-};
-
-Rectangle.prototype.calculateArea = function()
-{
-    return this.width * this.height;
-};
-
-Rectangle.prototype.calculatePerimeter = function()
-{
-    return 2 * this.width + 2 * this.height;
-};
