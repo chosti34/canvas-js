@@ -1,4 +1,7 @@
-class CCircle extends CShape {
+import { CShape } from "./Shape";
+import { ShapeType } from "./Shape";
+
+export class CCircle extends CShape {
     constructor(private x: number, private y: number, private radius: number, fillColor: string, outlineColor: string) {
         super(fillColor, outlineColor);
     }

@@ -1,4 +1,10 @@
-class CApplication {
+import { CCircle } from "./Circle";
+import { CRectangle } from "./Rectangle";
+import { CShape } from "./Shape";
+import { ShapeType } from "./Shape";
+import { CTriangle } from "./Triangle";
+
+export class CApplication {
     private canvas: CCanvas;
 
     private rectangle: CRectangle;

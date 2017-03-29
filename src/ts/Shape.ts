@@ -1,10 +1,12 @@
-enum ShapeType {
+import { IShape } from "./IShape";
+
+export enum ShapeType {
     Rectangle,
     Triangle,
     Circle,
 }
 
-abstract class CShape implements IShape {
+export abstract class CShape implements IShape {
     constructor(protected fillColor: string, protected outlineColor: string) {
     }
 

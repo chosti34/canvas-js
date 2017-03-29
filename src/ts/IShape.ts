@@ -1,4 +1,4 @@
-interface IShape {
+export interface IShape {
     setFillColor(fillColor: string): void;
     getFillColor(): string;
 

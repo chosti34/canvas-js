@@ -20,11 +20,13 @@
     "grunt-open": "^0.2.3",
     "grunt-react": "^0.12.3",
     "grunt-spell": "^1.0.0",
+    "grunt-systemjs-builder": "^1.0.0",
     "grunt-ts": "^6.0.0-beta.15",
     "grunt-tslint": "^4.0.1",
     "grunt-typescript": "^0.8.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "systemjs": "^0.19.47",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1"
   },

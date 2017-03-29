@@ -7,10 +7,14 @@
   </head>
   <body>
     <div id="app"></div>
-    <script src="//localhost:35729/livereload.js"></script>
     <script type="text/javascript" src="build/react.min.[fe3e04b0].js"></script>
     <script type="text/javascript" src="build/react-dom.min.[f9265a48].js"></script>
     <script type="text/javascript" src="build/app.[76b9af12].js"></script>
-    <script type="text/javascript" src="build/canvas.min.[32b18853].js"></script>
+    <script type="text/javascript" src="node_modules/systemjs/dist/system.js"></script>
+    <script type="text/javascript" src="build/canvas.min.[23d31e12].js"></script>
+    <script>
+      System.import('main');
+    </script>
+    <script src="//localhost:35729/livereload.js"></script>
   </body>
 </html>

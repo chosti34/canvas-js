@@ -42,7 +42,7 @@ module.exports = function(grunt)
         // merge all js files
         concat: {
             dist: {
-                src: ['temp/**/*.js'],
+                src: ['node_modules/systemjs/dist/system.js', 'temp/**/*.js'],
                 dest: 'temp/canvas.js'
             }
         },
@@ -121,15 +121,34 @@ module.exports = function(grunt)
 
         ts: {
             default: {
-                src: ['src/ts/Canvas.ts', 'src/ts/IShape.ts', 'src/ts/Shape.ts', 'src/ts/Rectangle.ts', 'src/ts/Triangle.ts', 'src/ts/Circle.ts', 'src/ts/Application.ts', 'src/ts/main.ts'],
+                src: ['src/ts/**/*.ts'/*'src/ts/Canvas.ts', 'src/ts/IShape.ts', 'src/ts/Shape.ts', 'src/ts/Rectangle.ts', 'src/ts/Triangle.ts', 'src/ts/Circle.ts', 'src/ts/Application.ts', 'src/ts/main.ts'*/],
                 out: 'temp/canvas.js',
+                configFile: 'tsconfig.json',
                 options: {
                     module: 'system',
                     target: 'es5',
                     noImplicitAny: true,
                     noEmitOnError: true,
-                    sourceMap: false
+                    sourceMap: false,
                 }
+            }
+        },
+
+        systemjs: {
+            options: {
+                sfx: true,
+                baseURL: "./",
+                configFile: "./system.js",
+                minify: true,
+                build: {
+                    mangle: false
+                }
+            },
+            dist: {
+                files: [{
+                    "src":  "./temp/canvas.js",
+                    "dest": "./build/canvas.min.js"
+                }]
             }
         },
 
@@ -145,8 +164,8 @@ module.exports = function(grunt)
             },
 
             scripts: {
-                files: ['src/ts/**/*.*', 'src/jsx/**/*.*'],
-                tasks: ['spell', 'clean', 'copy', 'cssmin', 'react', 'tslint', 'ts', 'uglify', 'hashres:prod'],
+                files: ['src/jsx/**/*.*', 'src/ts/**/*.*'],
+                tasks: ['spell', 'clean', 'copy', 'cssmin', 'react', 'tslint', 'ts', 'concat', 'systemjs', /*'uglify',*/ 'hashres:prod'],
             },
 
             html: {
@@ -168,9 +187,10 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-react');
     grunt.loadNpmTasks('grunt-spell');
+    grunt.loadNpmTasks("grunt-systemjs-builder");
 
     grunt.registerTask('default', [
-        'clean', 'copy', 'ts', 'tslint', 'concat', 'uglify', 'react', 'cssmin',
-        'connect:server', 'copy:main', 'hashres:prod', 'watch'
+        'clean', 'copy', 'tslint', 'ts', 'concat', 'systemjs', /*'uglify'*/ 'react', 'cssmin',
+        'connect:server', 'hashres:prod', 'watch'
     ]);
 };

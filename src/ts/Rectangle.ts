@@ -1,4 +1,7 @@
-class CRectangle extends CShape {
+import { CShape } from "./Shape";
+import { ShapeType } from "./Shape";
+
+export class CRectangle extends CShape {
     constructor(private x: number, private y: number,
                 private width: number, private height: number,
                 fillColor: string, outlineColor: string) {
