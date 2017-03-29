@@ -1,4 +1,4 @@
-var App = React.createClass({
+let Application = React.createClass({
     render: function() {
         return (
             <div className="container">
@@ -11,7 +11,7 @@ var App = React.createClass({
     }
 });
 
-var ShapePropertiesForm = React.createClass({
+let ShapePropertiesForm = React.createClass({
     render() {
         return (
             <div className="main-form-block col-md-4">
@@ -28,7 +28,7 @@ var ShapePropertiesForm = React.createClass({
     }
 });
 
-var ShapeSelector = React.createClass({
+let ShapeSelector = React.createClass({
     render() {
         return (
             <div>
@@ -44,7 +44,7 @@ var ShapeSelector = React.createClass({
     }
 });
 
-var ColorPropertiesBlock = React.createClass({
+let ColorPropertiesBlock = React.createClass({
     render() {
         return (
             <div id="colorParams">
@@ -65,16 +65,16 @@ var ColorPropertiesBlock = React.createClass({
     }
 });
 
-var RectanglePropertiesBlock = React.createClass({
+let RectanglePropertiesBlock = React.createClass({
     render() {
         return (
             <div id="rectangleParams">
                 <label className="main-form-input-label">
-                    <span>X coord:</span>
+                    <span>X coordinate:</span>
                     <input id="rectangleX" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>Y coord:</span>
+                    <span>Y coordinate:</span>
                     <input id="rectangleY" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
@@ -90,32 +90,32 @@ var RectanglePropertiesBlock = React.createClass({
     }
 });
 
-var TrianglePropertiesBlock = React.createClass({
+let TrianglePropertiesBlock = React.createClass({
     render() {
         return (
             <div id="triangleParams">
                 <label className="main-form-input-label">
-                    <span>X1 coord:</span>
+                    <span>X1 coordinate:</span>
                     <input id="triangleX1" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>Y1 coord:</span>
+                    <span>Y1 coordinate:</span>
                     <input id="triangleY1" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>X2 coord:</span>
+                    <span>X2 coordinate:</span>
                     <input id="triangleX2" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>Y2 coord:</span>
+                    <span>Y2 coordinate:</span>
                     <input id="triangleY2" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>X3 coord:</span>
+                    <span>X3 coordinate:</span>
                     <input id="triangleX3" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>Y3 coord:</span>
+                    <span>Y3 coordinate:</span>
                     <input id="triangleY3" type="number" placeholder="Number" />
                 </label>
             </div>
@@ -123,16 +123,16 @@ var TrianglePropertiesBlock = React.createClass({
     }
 });
 
-var CirclePropertiesBlock = React.createClass({
+let CirclePropertiesBlock = React.createClass({
     render() {
         return (
             <div id="circleParams">
                 <label className="main-form-input-label">
-                    <span>X coord:</span>
+                    <span>X coordinate:</span>
                     <input id="circleX" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
-                    <span>Y coord:</span>
+                    <span>Y coordinate:</span>
                     <input id="circleY" type="number" placeholder="Number" />
                 </label>
                 <label className="main-form-input-label">
@@ -144,7 +144,7 @@ var CirclePropertiesBlock = React.createClass({
     }
 });
 
-var MainButtonsBlock = React.createClass({
+let MainButtonsBlock = React.createClass({
     render() {
         return (
             <div className="main-form-buttons-block">
@@ -155,7 +155,7 @@ var MainButtonsBlock = React.createClass({
     }
 });
 
-var Canvas = React.createClass({
+let Canvas = React.createClass({
     render() {
         return (
             <div className="col-md-8">
@@ -168,4 +168,4 @@ var Canvas = React.createClass({
     }
 });
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Application />, document.getElementById('application'));

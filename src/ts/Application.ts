@@ -11,10 +11,10 @@ export class CApplication {
     private triangle: CTriangle;
     private circle: CCircle;
 
-    private colorParametrsElement: HTMLElement;
-    private rectangleParametrsElement: HTMLElement;
-    private triangleParametrsElement: HTMLElement;
-    private circleParametrsElement: HTMLElement;
+    private colorParametersElement: HTMLElement;
+    private rectangleParametersElement: HTMLElement;
+    private triangleParametersElement: HTMLElement;
+    private circleParametersElement: HTMLElement;
 
     private shapeSelectorElement: HTMLInputElement;
     private drawButton: HTMLButtonElement;
@@ -24,21 +24,21 @@ export class CApplication {
     private outlineColorElement: HTMLInputElement;
     private outlineThicknessElement: HTMLInputElement;
 
-    private xRectangleCoordElement: HTMLInputElement;
-    private yRectangleCoordElement: HTMLInputElement;
+    private xRectangleCoordinateElement: HTMLInputElement;
+    private yRectangleCoordinateElement: HTMLInputElement;
     private rectangleWidthElement: HTMLInputElement;
     private rectangleHeightElement: HTMLInputElement;
 
-    private xCircleCoordElement: HTMLInputElement;
-    private yCircleCoordElement: HTMLInputElement;
+    private xCircleCoordinateElement: HTMLInputElement;
+    private yCircleCoordinateElement: HTMLInputElement;
     private circleRadiusElement: HTMLInputElement;
 
-    private x1TriangleCoordElement: HTMLInputElement;
-    private y1TriangleCoordElement: HTMLInputElement;
-    private x2TriangleCoordElement: HTMLInputElement;
-    private y2TriangleCoordElement: HTMLInputElement;
-    private x3TriangleCoordElement: HTMLInputElement;
-    private y3TriangleCoordElement: HTMLInputElement;
+    private x1TriangleCoordinateElement: HTMLInputElement;
+    private y1TriangleCoordinateElement: HTMLInputElement;
+    private x2TriangleCoordinateElement: HTMLInputElement;
+    private y2TriangleCoordinateElement: HTMLInputElement;
+    private x3TriangleCoordinateElement: HTMLInputElement;
+    private y3TriangleCoordinateElement: HTMLInputElement;
 
     constructor() {
         this.canvas = this.getCanvasById("canvas");
@@ -47,11 +47,11 @@ export class CApplication {
         this.triangle = new CTriangle(340, 150, 280, 320, 165, 125, "#f0f", "#09f");
         this.circle = new CCircle(350, 230, 50, "#ff0", "#f00");
 
-        // инициализируем элементы интерфейса
+        // interface elements init
         this.initializeInterfaceElements();
         this.hideAllInterfaceItems();
 
-        // ставим обработчики на элементы интерфейса
+        // add handlers to interface elements
         this.setHandlerOnShapeSelector();
         this.setHandlerOnDrawButton();
         this.setHandlerOnClearButton();
@@ -65,10 +65,10 @@ export class CApplication {
     }
 
     private initializeInterfaceElements(): void {
-        this.colorParametrsElement = document.getElementById("colorParams");
-        this.rectangleParametrsElement = document.getElementById("rectangleParams");
-        this.triangleParametrsElement = document.getElementById("triangleParams");
-        this.circleParametrsElement = document.getElementById("circleParams");
+        this.colorParametersElement = document.getElementById("colorParams");
+        this.rectangleParametersElement = document.getElementById("rectangleParams");
+        this.triangleParametersElement = document.getElementById("triangleParams");
+        this.circleParametersElement = document.getElementById("circleParams");
 
         this.shapeSelectorElement = <HTMLInputElement> document.getElementById("shapeSelector");
         this.drawButton = <HTMLButtonElement> document.getElementById("canvasDrawButton");
@@ -78,28 +78,28 @@ export class CApplication {
         this.outlineColorElement = <HTMLInputElement> document.getElementById("borderColor");
         this.outlineThicknessElement = <HTMLInputElement> document.getElementById("outlineThickness");
 
-        this.xRectangleCoordElement = <HTMLInputElement> document.getElementById("rectangleX");
-        this.yRectangleCoordElement = <HTMLInputElement> document.getElementById("rectangleY");
+        this.xRectangleCoordinateElement = <HTMLInputElement> document.getElementById("rectangleX");
+        this.yRectangleCoordinateElement = <HTMLInputElement> document.getElementById("rectangleY");
         this.rectangleWidthElement = <HTMLInputElement> document.getElementById("rectangleWidth");
         this.rectangleHeightElement = <HTMLInputElement> document.getElementById("rectangleHeight");
 
-        this.xCircleCoordElement = <HTMLInputElement> document.getElementById("circleX");
-        this.yCircleCoordElement = <HTMLInputElement> document.getElementById("circleY");
+        this.xCircleCoordinateElement = <HTMLInputElement> document.getElementById("circleX");
+        this.yCircleCoordinateElement = <HTMLInputElement> document.getElementById("circleY");
         this.circleRadiusElement = <HTMLInputElement> document.getElementById("circleRadius");
 
-        this.x1TriangleCoordElement = <HTMLInputElement> document.getElementById("triangleX1");
-        this.y1TriangleCoordElement = <HTMLInputElement> document.getElementById("triangleY1");
-        this.x2TriangleCoordElement = <HTMLInputElement> document.getElementById("triangleX2");
-        this.y2TriangleCoordElement = <HTMLInputElement> document.getElementById("triangleY2");
-        this.x3TriangleCoordElement = <HTMLInputElement> document.getElementById("triangleX3");
-        this.y3TriangleCoordElement = <HTMLInputElement> document.getElementById("triangleY3");
+        this.x1TriangleCoordinateElement = <HTMLInputElement> document.getElementById("triangleX1");
+        this.y1TriangleCoordinateElement = <HTMLInputElement> document.getElementById("triangleY1");
+        this.x2TriangleCoordinateElement = <HTMLInputElement> document.getElementById("triangleX2");
+        this.y2TriangleCoordinateElement = <HTMLInputElement> document.getElementById("triangleY2");
+        this.x3TriangleCoordinateElement = <HTMLInputElement> document.getElementById("triangleX3");
+        this.y3TriangleCoordinateElement = <HTMLInputElement> document.getElementById("triangleY3");
     }
 
     private hideAllInterfaceItems(): void {
-        this.colorParametrsElement.style.display = "none";
-        this.rectangleParametrsElement.style.display = "none";
-        this.triangleParametrsElement.style.display = "none";
-        this.circleParametrsElement.style.display = "none";
+        this.colorParametersElement.style.display = "none";
+        this.rectangleParametersElement.style.display = "none";
+        this.triangleParametersElement.style.display = "none";
+        this.circleParametersElement.style.display = "none";
     }
 
     private setHandlerOnShapeSelector(): void {
@@ -109,31 +109,31 @@ export class CApplication {
                 case "Rectangle":
                     this.setCanvasPropertiesToInput();
                     this.setRectanglePropertiesToInput();
-                    this.getParametrsAndDrawRectangle();
-                    this.colorParametrsElement.style.display = "block";
-                    this.rectangleParametrsElement.style.display = "block";
-                    this.triangleParametrsElement.style.display = "none";
-                    this.circleParametrsElement.style.display = "none";
+                    this.getParametersAndDrawRectangle();
+                    this.colorParametersElement.style.display = "block";
+                    this.rectangleParametersElement.style.display = "block";
+                    this.triangleParametersElement.style.display = "none";
+                    this.circleParametersElement.style.display = "none";
                     break;
                 case "Triangle":
                     this.setCanvasPropertiesToInput();
                     this.setTrianglePropertiesToInput();
-                    this.getParametrsAndDrawTriangle();
-                    this.colorParametrsElement.style.display = "block";
-                    this.rectangleParametrsElement.style.display = "none";
-                    this.triangleParametrsElement.style.display = "block";
-                    this.circleParametrsElement.style.display = "none";
+                    this.getParametersAndDrawTriangle();
+                    this.colorParametersElement.style.display = "block";
+                    this.rectangleParametersElement.style.display = "none";
+                    this.triangleParametersElement.style.display = "block";
+                    this.circleParametersElement.style.display = "none";
                     break;
                 case "Circle":
                     this.setCanvasPropertiesToInput();
                     this.setCirclePropertiesToInput();
-                    this.getParametrsAndDrawCircle();
-                    this.colorParametrsElement.style.display = "block";
-                    this.rectangleParametrsElement.style.display = "none";
-                    this.triangleParametrsElement.style.display = "none";
-                    this.circleParametrsElement.style.display = "block";
+                    this.getParametersAndDrawCircle();
+                    this.colorParametersElement.style.display = "block";
+                    this.rectangleParametersElement.style.display = "none";
+                    this.triangleParametersElement.style.display = "none";
+                    this.circleParametersElement.style.display = "block";
                     break;
-                default: // выбран вариант <No shape>
+                default: // default choice is <No shape>
                     this.hideAllInterfaceItems();
                     this.canvas.clear();
                     break;
@@ -148,19 +148,19 @@ export class CApplication {
                 case "Rectangle":
                     this.setCanvasPropertiesToInput();
                     this.setRectanglePropertiesToInput();
-                    this.getParametrsAndDrawRectangle();
+                    this.getParametersAndDrawRectangle();
                     break;
                 case "Triangle":
                     this.setCanvasPropertiesToInput();
                     this.setTrianglePropertiesToInput();
-                    this.getParametrsAndDrawTriangle();
+                    this.getParametersAndDrawTriangle();
                     break;
                 case "Circle":
                     this.setCanvasPropertiesToInput();
                     this.setCirclePropertiesToInput();
-                    this.getParametrsAndDrawCircle();
+                    this.getParametersAndDrawCircle();
                     break;
-                default: // выбран параметр <No shape>
+                default: // default choice is <No shape>
                     alert("Choose shape");
                     break;
             }
@@ -180,15 +180,15 @@ export class CApplication {
             switch (this.getSelectedShape().getType()) {
                 case ShapeType.Rectangle:
                     this.rectangle.setFillColor(newFillColor);
-                    this.getParametrsAndDrawRectangle();
+                    this.getParametersAndDrawRectangle();
                     break;
                 case ShapeType.Triangle:
                     this.triangle.setFillColor(newFillColor);
-                    this.getParametrsAndDrawTriangle();
+                    this.getParametersAndDrawTriangle();
                     break;
                 case ShapeType.Circle:
                     this.circle.setFillColor(newFillColor);
-                    this.getParametrsAndDrawCircle();
+                    this.getParametersAndDrawCircle();
                     break;
                 default:
                     throw new Error("Unknown shape");
@@ -200,15 +200,15 @@ export class CApplication {
             switch (this.getSelectedShape().getType()) {
                 case ShapeType.Rectangle:
                     this.rectangle.setOutlineColor(newOutlineColor);
-                    this.getParametrsAndDrawRectangle();
+                    this.getParametersAndDrawRectangle();
                     break;
                 case ShapeType.Triangle:
                     this.triangle.setOutlineColor(newOutlineColor);
-                    this.getParametrsAndDrawTriangle();
+                    this.getParametersAndDrawTriangle();
                     break;
                 case ShapeType.Circle:
                     this.circle.setOutlineColor(newOutlineColor);
-                    this.getParametrsAndDrawCircle();
+                    this.getParametersAndDrawCircle();
                     break;
                 default:
                     throw new Error("Unknown type");
@@ -220,69 +220,69 @@ export class CApplication {
             this.canvas.setLineWidth(newOutlineThickness);
             switch (this.getSelectedShape().getType()) {
                 case ShapeType.Rectangle:
-                    this.getParametrsAndDrawRectangle();
+                    this.getParametersAndDrawRectangle();
                     break;
                 case ShapeType.Triangle:
-                    this.getParametrsAndDrawTriangle();
+                    this.getParametersAndDrawTriangle();
                     break;
                 case ShapeType.Circle:
-                    this.getParametrsAndDrawCircle();
+                    this.getParametersAndDrawCircle();
                     break;
                 default:
                     throw new Error("Unknown type");
             }
         });
 
-        this.xRectangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawRectangle();
+        this.xRectangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawRectangle();
         });
 
-        this.yRectangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawRectangle();
+        this.yRectangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawRectangle();
         });
 
         this.rectangleWidthElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawRectangle();
+            this.getParametersAndDrawRectangle();
         });
 
         this.rectangleHeightElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawRectangle();
+            this.getParametersAndDrawRectangle();
         });
 
-        this.xCircleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawCircle();
+        this.xCircleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawCircle();
         });
 
-        this.yCircleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawCircle();
+        this.yCircleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawCircle();
         });
 
         this.circleRadiusElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawCircle();
+            this.getParametersAndDrawCircle();
         });
 
-        this.x1TriangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawTriangle();
+        this.x1TriangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawTriangle();
         });
 
-        this.y1TriangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawTriangle();
+        this.y1TriangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawTriangle();
         });
 
-        this.x2TriangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawTriangle();
+        this.x2TriangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawTriangle();
         });
 
-        this.y2TriangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawTriangle();
+        this.y2TriangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawTriangle();
         });
 
-        this.x3TriangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawTriangle();
+        this.x3TriangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawTriangle();
         });
 
-        this.y3TriangleCoordElement.addEventListener("input", (event: Event) => {
-            this.getParametrsAndDrawTriangle();
+        this.y3TriangleCoordinateElement.addEventListener("input", (event: Event) => {
+            this.getParametersAndDrawTriangle();
         });
     }
 
@@ -293,24 +293,24 @@ export class CApplication {
     }
 
     private setRectanglePropertiesToInput(): void {
-        this.xRectangleCoordElement.value = this.rectangle.getX().toString(10);
-        this.yRectangleCoordElement.value = this.rectangle.getY().toString(10);
+        this.xRectangleCoordinateElement.value = this.rectangle.getX().toString(10);
+        this.yRectangleCoordinateElement.value = this.rectangle.getY().toString(10);
         this.rectangleWidthElement.value = this.rectangle.getWidth().toString(10);
         this.rectangleHeightElement.value = this.rectangle.getHeight().toString(10);
     }
 
     private setTrianglePropertiesToInput(): void {
-        this.x1TriangleCoordElement.value = this.triangle.getX1().toString(10);
-        this.y1TriangleCoordElement.value = this.triangle.getY1().toString(10);
-        this.x2TriangleCoordElement.value = this.triangle.getX2().toString(10);
-        this.y2TriangleCoordElement.value = this.triangle.getY2().toString(10);
-        this.x3TriangleCoordElement.value = this.triangle.getX3().toString(10);
-        this.y3TriangleCoordElement.value = this.triangle.getY3().toString(10);
+        this.x1TriangleCoordinateElement.value = this.triangle.getX1().toString(10);
+        this.y1TriangleCoordinateElement.value = this.triangle.getY1().toString(10);
+        this.x2TriangleCoordinateElement.value = this.triangle.getX2().toString(10);
+        this.y2TriangleCoordinateElement.value = this.triangle.getY2().toString(10);
+        this.x3TriangleCoordinateElement.value = this.triangle.getX3().toString(10);
+        this.y3TriangleCoordinateElement.value = this.triangle.getY3().toString(10);
     }
 
     private setCirclePropertiesToInput(): void {
-        this.xCircleCoordElement.value = this.circle.getX().toString(10);
-        this.yCircleCoordElement.value = this.circle.getY().toString(10);
+        this.xCircleCoordinateElement.value = this.circle.getX().toString(10);
+        this.yCircleCoordinateElement.value = this.circle.getY().toString(10);
         this.circleRadiusElement.value = this.circle.getRadius().toString(10);
     }
 
@@ -319,21 +319,21 @@ export class CApplication {
         this.outlineColorElement.value = "";
         this.outlineThicknessElement.value = "";
 
-        this.xRectangleCoordElement.value = "";
-        this.yRectangleCoordElement.value = "";
+        this.xRectangleCoordinateElement.value = "";
+        this.yRectangleCoordinateElement.value = "";
         this.rectangleWidthElement.value = "";
         this.rectangleHeightElement.value = "";
 
-        this.xCircleCoordElement.value = "";
-        this.yCircleCoordElement.value = "";
+        this.xCircleCoordinateElement.value = "";
+        this.yCircleCoordinateElement.value = "";
         this.circleRadiusElement.value = "";
 
-        this.x1TriangleCoordElement.value = "";
-        this.y1TriangleCoordElement.value = "";
-        this.x2TriangleCoordElement.value = "";
-        this.y2TriangleCoordElement.value = "";
-        this.x3TriangleCoordElement.value = "";
-        this.y3TriangleCoordElement.value = "";
+        this.x1TriangleCoordinateElement.value = "";
+        this.y1TriangleCoordinateElement.value = "";
+        this.x2TriangleCoordinateElement.value = "";
+        this.y2TriangleCoordinateElement.value = "";
+        this.x3TriangleCoordinateElement.value = "";
+        this.y3TriangleCoordinateElement.value = "";
     }
 
     private getSelectedShape(): CShape {
@@ -356,12 +356,12 @@ export class CApplication {
         this.canvas.setLineWidth(parseInt(this.outlineThicknessElement.value, 10));
     }
 
-    private getParametrsAndDrawRectangle(): void {
+    private getParametersAndDrawRectangle(): void {
         this.canvas.clear();
         this.setCanvasProperties();
 
-        this.rectangle.setX(parseInt(this.xRectangleCoordElement.value, 10));
-        this.rectangle.setY(parseInt(this.yRectangleCoordElement.value, 10));
+        this.rectangle.setX(parseInt(this.xRectangleCoordinateElement.value, 10));
+        this.rectangle.setY(parseInt(this.yRectangleCoordinateElement.value, 10));
         this.rectangle.setWidth(parseInt(this.rectangleWidthElement.value, 10));
         this.rectangle.setHeight(parseInt(this.rectangleHeightElement.value, 10));
 
@@ -371,16 +371,16 @@ export class CApplication {
         this.rectangle.draw(this.canvas);
     }
 
-    private getParametrsAndDrawTriangle(): void {
+    private getParametersAndDrawTriangle(): void {
         this.canvas.clear();
         this.setCanvasProperties();
 
-        this.triangle.setX1(parseInt(this.x1TriangleCoordElement.value, 10));
-        this.triangle.setY1(parseInt(this.y1TriangleCoordElement.value, 10));
-        this.triangle.setX2(parseInt(this.x2TriangleCoordElement.value, 10));
-        this.triangle.setY2(parseInt(this.y2TriangleCoordElement.value, 10));
-        this.triangle.setX3(parseInt(this.x3TriangleCoordElement.value, 10));
-        this.triangle.setY3(parseInt(this.y3TriangleCoordElement.value, 10));
+        this.triangle.setX1(parseInt(this.x1TriangleCoordinateElement.value, 10));
+        this.triangle.setY1(parseInt(this.y1TriangleCoordinateElement.value, 10));
+        this.triangle.setX2(parseInt(this.x2TriangleCoordinateElement.value, 10));
+        this.triangle.setY2(parseInt(this.y2TriangleCoordinateElement.value, 10));
+        this.triangle.setX3(parseInt(this.x3TriangleCoordinateElement.value, 10));
+        this.triangle.setY3(parseInt(this.y3TriangleCoordinateElement.value, 10));
 
         this.canvas.print("Area: " + this.triangle.getArea().toFixed(2), 460, 430, "#000");
         this.canvas.print("Perimeter: " + this.triangle.getPerimeter().toFixed(2), 460, 460, "#000");
@@ -388,12 +388,12 @@ export class CApplication {
         this.triangle.draw(this.canvas);
     }
 
-    private getParametrsAndDrawCircle(): void {
+    private getParametersAndDrawCircle(): void {
         this.canvas.clear();
         this.setCanvasProperties();
 
-        this.circle.setX(parseInt(this.xCircleCoordElement.value, 10));
-        this.circle.setY(parseInt(this.yCircleCoordElement.value, 10));
+        this.circle.setX(parseInt(this.xCircleCoordinateElement.value, 10));
+        this.circle.setY(parseInt(this.yCircleCoordinateElement.value, 10));
         this.circle.setRadius(parseInt(this.circleRadiusElement.value, 10));
 
         this.canvas.print("Area: " + this.circle.getArea().toFixed(2), 460, 430, "#000");

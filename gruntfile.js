@@ -1,7 +1,6 @@
 module.exports = function(grunt)
 {
     grunt.initConfig({
-        // connects to the (local?) server
         connect: {
             server: {
                 options: {
@@ -15,7 +14,6 @@ module.exports = function(grunt)
             }
         },
 
-        // copy index.html to build/ folder
         copy: {
             main: {
                 files: [
@@ -23,39 +21,51 @@ module.exports = function(grunt)
                         expand: true,
                         cwd: 'node_modules/react/dist/',
                         src: 'react.min.js',
-                        dest: 'build/'
+                        dest: './build/'
                     },
 
                     {
                         expand: true,
                         cwd: 'node_modules/react-dom/dist/',
                         src: 'react-dom.min.js',
-                        dest: 'build/'
+                        dest: './build/'
+                    },
+
+                    {
+                        expand: true,
+                        cwd: 'node_modules/systemjs/dist/',
+                        src: 'system.js',
+                        dest: './build/'
                     }
                 ]
             }
         },
 
-        // clean build and temp directory
-        clean: ['build', 'temp'],
+        clean: {
+            all: [
+               'build/**/*.*',
+               '!build/scripts.js',
+               '!build/styles.css'
+            ],
+            css: [
+                'build/**/*.*',
+                '!build/scripts.*.js'
+            ]
+        },
 
-        // merge all js files
         concat: {
             dist: {
-                src: ['node_modules/systemjs/dist/system.js', 'temp/**/*.js'],
-                dest: 'temp/canvas.js'
+                src: [
+                    './build/system.js',
+                    './build/react.min.js',
+                    './build/react-dom.min.js',
+                    './build/app.js',
+                    './build/canvas-modules.js'
+                ],
+                dest: './build/scripts.js'
             }
         },
 
-        // uglifying js files
-        uglify: {
-            build: {
-                src: 'temp/canvas.js',
-                dest: 'build/canvas.min.js'
-            }
-        },
-
-        // uglifying css files
         cssmin: {
             options: {
                 mergeIntoShorthands: false,
@@ -64,7 +74,7 @@ module.exports = function(grunt)
 
             target: {
                 files: {
-                    'build/canvas.min.css': [
+                    'build/styles.css': [
                         'node_modules/bootstrap/dist/css/bootstrap.min.css',
                         'src/css/main.css'
                     ]
@@ -72,15 +82,10 @@ module.exports = function(grunt)
             }
         },
 
-        // code analyser
-        eslint: {
-            target: ['temp/canvas.js']
-        },
-
         tslint: {
             options:
             {
-                configFile: '.eslintrc.json',
+                configFile: 'tslint.json',
                 quiet: false
             },
             target: 'src/ts/*.ts'
@@ -93,11 +98,8 @@ module.exports = function(grunt)
 
             prod: {
                 src: [
-                    'build/canvas.min.js',
-                    'build/canvas.min.css',
-                    'build/app.js',
-                    'build/react-dom.min.js',
-                    'build/react.min.js'
+                    './build/scripts.js',
+                    './build/styles.css'
                 ],
 
                 dest: ['index.html']
@@ -107,22 +109,15 @@ module.exports = function(grunt)
         react: {
             single_file_output: {
                 files: {
-                    'build/app.js': 'src/jsx/app.jsx'
+                    './build/app.js': 'src/jsx/**/*.jsx'
                 }
-            }
-        },
-
-        spell: {
-            files: ['src/**/*.*'],
-            options: {
-                lang: 'en'
             }
         },
 
         ts: {
             default: {
-                src: ['src/ts/**/*.ts'/*'src/ts/Canvas.ts', 'src/ts/IShape.ts', 'src/ts/Shape.ts', 'src/ts/Rectangle.ts', 'src/ts/Triangle.ts', 'src/ts/Circle.ts', 'src/ts/Application.ts', 'src/ts/main.ts'*/],
-                out: 'temp/canvas.js',
+                src: ['src/ts/**/*.ts'],
+                out: './build/canvas.js',
                 configFile: 'tsconfig.json',
                 options: {
                     module: 'system',
@@ -138,21 +133,31 @@ module.exports = function(grunt)
             options: {
                 sfx: true,
                 baseURL: "./",
-                configFile: "./system.js",
+                configFile: "./system.config.js",
                 minify: true,
+                sourceMaps: false,
                 build: {
                     mangle: false
                 }
             },
+
             dist: {
                 files: [{
-                    "src":  "./temp/canvas.js",
-                    "dest": "./build/canvas.min.js"
+                    "src":  "./build/canvas.js",
+                    "dest": "./build/canvas-modules.js"
                 }]
             }
         },
 
-        // Automatically calls procedures in tasks array
+        shell: {
+            options: {
+                stderr: true
+            },
+            target: {
+                command: 'cspell src/**/*.*'
+            }
+        },
+
         watch: {
             options: {
                 livereload: true
@@ -160,37 +165,41 @@ module.exports = function(grunt)
 
             css: {
                 files: ['src/css/**/*.*'],
-                tasks: ['spell', 'cssmin', 'hashres:prod']
+                tasks: ['shell', 'clean:css', 'cssmin', 'hashres:prod']
             },
 
             scripts: {
                 files: ['src/jsx/**/*.*', 'src/ts/**/*.*'],
-                tasks: ['spell', 'clean', 'copy', 'cssmin', 'react', 'tslint', 'ts', 'concat', 'systemjs', /*'uglify',*/ 'hashres:prod'],
+                tasks: [
+                    'shell', 'clean', 'copy', 'react', 'tslint', 'ts',
+                    'systemjs', 'concat', 'cssmin',
+                    'clean:all', 'hashres:prod'
+                ],
             },
 
             html: {
-                files: ['*.html']
+                files: ['*.html'],
+                tasks: ['shell']
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-hashres');
-    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks("grunt-tslint");
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-react');
-    grunt.loadNpmTasks('grunt-spell');
     grunt.loadNpmTasks("grunt-systemjs-builder");
+    grunt.loadNpmTasks('grunt-shell');
 
     grunt.registerTask('default', [
-        'clean', 'copy', 'tslint', 'ts', 'concat', 'systemjs', /*'uglify'*/ 'react', 'cssmin',
+        'shell', 'copy', 'react', 'tslint', 'ts',
+        'systemjs', 'concat', 'cssmin', 'clean:all',
         'connect:server', 'hashres:prod', 'watch'
     ]);
 };
